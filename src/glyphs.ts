@@ -78,7 +78,10 @@ export const Glyphs: Record<string, number> = {
 };
 
 export function writeGlyph(graphicalContext: CanvasRenderingContext2D, letter: string, posX: number, posY: number) {
-  let glyph = Glyphs[letter]; 
+  let glyph = Glyphs[letter];
+  graphicalContext.fillStyle = '#fff';
+  graphicalContext.fillRect(posX, posY, 4, 6);
+  graphicalContext.fillStyle = '#000';
   for (let i = 0; i < 24; i++) {
     let x = i % 4;
     let y = Math.floor(i / 4);

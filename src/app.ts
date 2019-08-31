@@ -1,6 +1,8 @@
 import { Glyphs, writeGlyph } from './glyphs';
 import { MapFactory } from './mapFactory'; 
 import { MapRenderer } from './mapRenderer';
+import { Actor } from './actor';
+import { ActorRenderer } from './actorRenderer';
 
 const canvas = document.createElement('canvas');
 canvas.width = 800;
@@ -13,6 +15,19 @@ const graphicalContext = canvas.getContext('2d');
 if (graphicalContext) {
   graphicalContext.scale(2, 2);
   
+  const hero = new Actor({
+    position: { x: 40, y: 20 },
+    glyph: '@'
+  });
+  const actors: Actor[] = [];
+  actors.push(hero);
+  const actorRenderer = new ActorRenderer({
+    graphicalContext: graphicalContext,
+    viewportWidth: 80,
+    viewportHeigth: 40,
+    position: { x: 0, y: 0},
+    actors: actors
+  });
   const map  = MapFactory.createMap({
     seed: 4242,
     detail: 9,
@@ -22,10 +37,11 @@ if (graphicalContext) {
     viewportWidth: 80,
     viewportHeight: 40,
     graphicalContext: graphicalContext,
-    map: map
+    map: map,
+    focus: hero
   });
   
   mapRenderer.render();
+  actorRenderer.render();
 
-  //writeGlyph(graphicalContext, 'A', 0, 0);
 }

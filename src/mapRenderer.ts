@@ -1,11 +1,13 @@
 import { Map } from './map';
-import { writeGlyph } from './glyphs'
+import { writeGlyph } from './glyphs';
+import { Actor } from './actor';
 
 export interface MapRendererOptions {
   viewportWidth: number;
   viewportHeight: number;
   graphicalContext: CanvasRenderingContext2D;
   map: Map;
+  focus: Actor;
 }
 
 export class MapRenderer {
@@ -14,6 +16,7 @@ export class MapRenderer {
     this._viewportHeight = options.viewportHeight;
     this._graphicalContext = options.graphicalContext;
     this._map = options.map;
+    this._focus = options.focus;
   }
 
   render () {
@@ -73,4 +76,5 @@ export class MapRenderer {
   private _viewportHeight: number;
   private _graphicalContext: CanvasRenderingContext2D;
   private _map: Map;
+  private _focus: Actor;
 }
