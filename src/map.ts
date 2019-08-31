@@ -27,6 +27,37 @@ export class Map {
     this._cells[position.x + position.y * this._width] = value;
   }
 
+  getMin () {
+    let min = Number.MAX_SAFE_INTEGER;
+    this._cells.forEach(function (cell) {
+      if (cell < min) {
+        min = cell;
+      }
+    });
+    return min;
+  }
+
+  getMax () {
+    let max = Number.MIN_SAFE_INTEGER;
+    this._cells.forEach(function (cell) {
+      if (cell > max) {
+        max = cell;
+      }
+    });
+    return max;
+  }
+
+  normalize (min: number, max: number) {
+    const mapMin = this.getMin();
+    const mapMax = this.getMax();
+    const mapRange = mapMax - mapMin;
+    const range = max - min;
+
+    this._cells = this._cells.map(function (cell) {
+      return Math.floor(((cell - mapMin) * range) / mapRange + min);
+    });
+  }
+
   private _width: number;
   private _height: number;
   private _size: number;

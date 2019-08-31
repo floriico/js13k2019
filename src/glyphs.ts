@@ -76,3 +76,16 @@ export const Glyphs: Record<string, number> = {
   '(': 0x488840,
   ')': 0x844480
 };
+
+export function writeGlyph(graphicalContext: CanvasRenderingContext2D, letter: string, posX: number, posY: number) {
+  let glyph = Glyphs[letter]; 
+  for (let i = 0; i < 24; i++) {
+    let x = i % 4;
+    let y = Math.floor(i / 4);
+    let bit = glyph & (1 << (23 - i));
+    console.log()
+    if (bit) {
+      graphicalContext.fillRect(x + posX, y + posY, 1, 1);
+    }
+  }
+}

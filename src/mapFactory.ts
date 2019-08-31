@@ -11,7 +11,7 @@ class MidPointDisplacement {
   constructor (options: MapFactoryOptions) {
     this._random = new Random (options.seed);
     this._rougthness = options.rougthness;
-    this._max = Math.pow(options.detail, 2);
+    this._max = Math.pow(2, options.detail);
     this._size = this._max + 1;
     this._map = new Map({ width: this._size, height: this._size });
   }
@@ -32,6 +32,7 @@ class MidPointDisplacement {
       }
       resolution = half;
     }
+    this._map.normalize(0, 10);
     return this._map;
   }
 
