@@ -131,7 +131,7 @@ export class GlyphWriter {
     
     for(let i = 0; i < length; i++) {
       let c = text.charAt(i);
-      writeGlyph(this._graphicalContext, c, cPosX, cPosY);
+      this.writeGlyph(c, cPosX, cPosY);
       cPosX += 4;
     }
   }

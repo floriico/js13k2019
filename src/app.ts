@@ -50,6 +50,10 @@ if (graphicalContext) {
     focus: hero
   });
   const console = new Console();
+  console.addMessage('Hello World !!');
+  console.addMessage('Florian Bellot');
+  console.addMessage('0123456789 0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+  
   const consoleRenderer = new ConsoleRenderer({
     console: console,
     glyphWriter: glyphWriter,
