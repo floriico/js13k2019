@@ -1,9 +1,9 @@
 import { Actor } from './actor';
 import { Position } from './position';
-import { writeGlyph } from './glyphs';
+import { writeGlyph, GlyphWriter } from './glyphs';
 
 export interface ActorRendererOptions {
-  graphicalContext: CanvasRenderingContext2D;
+  glyphWriter: GlyphWriter;
   position: Position;
   viewportWidth: number;
   viewportHeigth: number;
@@ -12,7 +12,7 @@ export interface ActorRendererOptions {
 
 export class ActorRenderer {
   constructor (options: ActorRendererOptions) {
-    this._graphicalContext = options.graphicalContext;
+    this._glyphWriter = options.glyphWriter;
     this._position = options.position;
     this._viewportWidth = options.viewportWidth;
     this._viewportHeight = options.viewportHeigth;
@@ -39,11 +39,11 @@ export class ActorRenderer {
         const displayY = actorPosition.y - this._position.y;
         const glyph = actor.getGlyph();
 
-        writeGlyph(this._graphicalContext, glyph, displayX * 4, displayY * 6) ;
+        this._glyphWriter.writeGlyph(glyph, displayX * 4, displayY * 6) ;
       }, this);
   }
 
-  private _graphicalContext: CanvasRenderingContext2D;
+  private _glyphWriter: GlyphWriter;
   private _position: Position;
   private _viewportWidth: number;
   private _viewportHeight: number;

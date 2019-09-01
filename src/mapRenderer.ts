@@ -1,11 +1,11 @@
 import { Map } from './map';
-import { writeGlyph } from './glyphs';
+import { writeGlyph, GlyphWriter } from './glyphs';
 import { Actor } from './actor';
 
 export interface MapRendererOptions {
   viewportWidth: number;
   viewportHeight: number;
-  graphicalContext: CanvasRenderingContext2D;
+  glyphWriter: GlyphWriter;
   map: Map;
   focus: Actor;
 }
@@ -14,7 +14,7 @@ export class MapRenderer {
   constructor (options: MapRendererOptions) {
     this._viewportWidth = options.viewportWidth;
     this._viewportHeight = options.viewportHeight;
-    this._graphicalContext = options.graphicalContext;
+    this._glyphWriter = options.glyphWriter;
     this._map = options.map;
     this._focus = options.focus;
   }
@@ -24,7 +24,7 @@ export class MapRenderer {
       for (let x = 0; x < this._viewportWidth; x++) {
         let cell = this._map.getCell({x: x, y: y});
         let glyph = this.getGlyph(cell);
-        writeGlyph(this._graphicalContext, glyph, x * 4, y * 6);
+        this._glyphWriter.writeGlyph(glyph, x * 4, y * 6);
       }
     }
   }
@@ -74,7 +74,7 @@ export class MapRenderer {
 
   private _viewportWidth: number;
   private _viewportHeight: number;
-  private _graphicalContext: CanvasRenderingContext2D;
+  private _glyphWriter: GlyphWriter;
   private _map: Map;
   private _focus: Actor;
 }

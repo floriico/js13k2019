@@ -31,7 +31,7 @@ if (graphicalContext) {
   const actors: Actor[] = [];
   actors.push(hero);
   const actorRenderer = new ActorRenderer({
-    graphicalContext: graphicalContext,
+    glyphWriter: glyphWriter,
     viewportWidth: 80,
     viewportHeigth: 40,
     position: { x: 0, y: 0},
@@ -45,7 +45,7 @@ if (graphicalContext) {
   const mapRenderer = new MapRenderer({
     viewportWidth: 80,
     viewportHeight: 40,
-    graphicalContext: graphicalContext,
+    glyphWriter: glyphWriter,
     map: map,
     focus: hero
   });
