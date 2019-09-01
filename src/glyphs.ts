@@ -1,3 +1,5 @@
+import { Color } from "./color";
+
 export const Glyphs: Record<string, number> = {
   '\x00': 0xEEE440, // tree
   '\x01': 0x6C06C0, // water
@@ -91,4 +93,50 @@ export function writeGlyph(graphicalContext: CanvasRenderingContext2D, letter: s
       graphicalContext.fillRect(x + posX, y + posY, 1, 1);
     }
   }
+}
+
+export interface GlyphWriterOptions {
+  graphicalContext: CanvasRenderingContext2D;
+  backgroundColor: Color;
+  foregroundColor: Color;
+}
+
+export class GlyphWriter {
+  constructor (options: GlyphWriterOptions) {
+    this._graphicalContext = options.graphicalContext;
+    this._backgroundColor = options.backgroundColor;
+    this._foregroundColor = options.foregroundColor;
+  }
+
+  writeGlyph (letter: string, posX: number, posY: number) {
+    let glyph = Glyphs[letter];
+    this._graphicalContext.fillStyle = this._backgroundColor;
+    this._graphicalContext.fillRect(posX, posY, 4, 6);
+    this._graphicalContext.fillStyle = this._foregroundColor;
+    for (let i = 0; i < 24; i++) {
+      let x = i % 4;
+      let y = Math.floor(i / 4);
+      let bit = glyph & (1 << (23 - i));
+      console.log()
+      if (bit) {
+        this._graphicalContext.fillRect(x + posX, y + posY, 1, 1);
+      }
+    }
+  }
+
+  writeText (text: string, posX: number, posY: number) {
+    let length = text.length;
+    let cPosX = posX;
+    let cPosY = posY;
+    
+    for(let i = 0; i < length; i++) {
+      let c = text.charAt(i);
+      writeGlyph(this._graphicalContext, c, cPosX, cPosY);
+      cPosX += 4;
+    }
+  }
+
+  private _graphicalContext: CanvasRenderingContext2D;
+  private _backgroundColor: Color;
+  private _foregroundColor: Color;
 }
