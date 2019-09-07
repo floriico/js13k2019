@@ -4,25 +4,24 @@ import { ActorRenderer } from "./actorRenderer";
 import { ConsoleRenderer } from "./consoleRenderer";
 import { GlyphWriter } from "./glyphs";
 import { Color } from "./color";
+import { AdventureStage } from "./adventureStage";
 
-export interface GameRendererOptions {
-  game: Game,
+export interface AdventureRendererOptions {
   glyphWriter: GlyphWriter
 }
 
-export class GameRenderer {
-  constructor (options: GameRendererOptions) {
-    this._game = options.game;
+export class AdventureRenderer {
+  constructor (options: AdventureRendererOptions) {
     this._glyphWriter = options.glyphWriter;
     this._mapRenderer = this.createMapRenderer();
     this._actorRenderer = this.createActorRenderer();
     this._consoleRenderer = this.createConsoleRenderer();
   }
 
-  render () {
-    this._mapRenderer.render();
-    this._actorRenderer.render();
-    this._consoleRenderer.render();
+  render (adventureStage: AdventureStage) {
+    this._mapRenderer.render(adventureStage.getMap(), adventureStage.getHero());
+    this._actorRenderer.render(adventureStage.getActors());
+    this._consoleRenderer.render(adventureStage.getConsole());
   }
 
   private createMapRenderer () : MapRenderer {
@@ -30,8 +29,6 @@ export class GameRenderer {
       viewportWidth: 80,
       viewportHeight: 40,
       glyphWriter: this._glyphWriter,
-      map: this._game.getMap(),
-      focus: this._game.getHero()
     });
   }
 
@@ -40,14 +37,12 @@ export class GameRenderer {
       glyphWriter: this._glyphWriter,
       viewportWidth: 80,
       viewportHeigth: 40,
-      position: { x: 0, y: 0},
-      actors: this._game.getActors()
+      position: { x: 0, y: 0}
     });
   }
 
   private createConsoleRenderer () : ConsoleRenderer {
     return new ConsoleRenderer({
-      console: this._game.getConsole(),
       glyphWriter: this._glyphWriter,
       viewportWidth: 100,
       viewportHeight: 10,
@@ -55,7 +50,6 @@ export class GameRenderer {
     });
   }
 
-  private _game: Game;
   private _glyphWriter: GlyphWriter;
   private _mapRenderer: MapRenderer;
   private _actorRenderer: ActorRenderer;

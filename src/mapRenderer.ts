@@ -6,8 +6,6 @@ export interface MapRendererOptions {
   viewportWidth: number;
   viewportHeight: number;
   glyphWriter: GlyphWriter;
-  map: Map;
-  focus: Actor;
 }
 
 export class MapRenderer {
@@ -15,14 +13,12 @@ export class MapRenderer {
     this._viewportWidth = options.viewportWidth;
     this._viewportHeight = options.viewportHeight;
     this._glyphWriter = options.glyphWriter;
-    this._map = options.map;
-    this._focus = options.focus;
   }
 
-  render () {
+  render (map: Map, focus: Actor) {
     for (let y = 0; y < this._viewportHeight; y++) {
       for (let x = 0; x < this._viewportWidth; x++) {
-        let cell = this._map.getCell({x: x, y: y});
+        let cell = map.getCell({x: x, y: y});
         let glyph = this.getGlyph(cell);
         this._glyphWriter.writeGlyph(glyph, x * 4, y * 6);
       }
@@ -75,6 +71,4 @@ export class MapRenderer {
   private _viewportWidth: number;
   private _viewportHeight: number;
   private _glyphWriter: GlyphWriter;
-  private _map: Map;
-  private _focus: Actor;
 }

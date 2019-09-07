@@ -7,7 +7,6 @@ export interface ActorRendererOptions {
   position: Position;
   viewportWidth: number;
   viewportHeigth: number;
-  actors: Actor[];
 }
 
 export class ActorRenderer {
@@ -16,15 +15,14 @@ export class ActorRenderer {
     this._position = options.position;
     this._viewportWidth = options.viewportWidth;
     this._viewportHeight = options.viewportHeigth;
-    this._actors = options.actors;
   }
 
   setPosition (position: Position) {
     this._position = position;
   }
 
-  render () {
-    this._actors
+  render (actors: Actor[]) {
+    actors
       .filter(actor => {
         const actorPosition = actor.getPosition();
         
@@ -47,5 +45,4 @@ export class ActorRenderer {
   private _position: Position;
   private _viewportWidth: number;
   private _viewportHeight: number;
-  private _actors: Actor[];
 }
