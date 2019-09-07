@@ -6,15 +6,14 @@ import { GlyphWriter } from "./glyphs";
 import { Color } from "./color";
 
 export interface GameRendererOptions {
-  game: Game
+  game: Game,
+  glyphWriter: GlyphWriter
 }
 
 export class GameRenderer {
   constructor (options: GameRendererOptions) {
     this._game = options.game;
-    this._canvas = this.createCanvas();
-    this._graphicalContext = this.createGraphicalContext();
-    this._glyphWriter = this.createGlyphWriter();
+    this._glyphWriter = options.glyphWriter;
     this._mapRenderer = this.createMapRenderer();
     this._actorRenderer = this.createActorRenderer();
     this._consoleRenderer = this.createConsoleRenderer();
@@ -24,23 +23,6 @@ export class GameRenderer {
     this._mapRenderer.render();
     this._actorRenderer.render();
     this._consoleRenderer.render();
-  }
-
-  private createCanvas () {
-    const canvas = document.createElement('canvas');
-    canvas.width = 800;
-    canvas.height = 600;
-    document.body.appendChild(canvas);
-    return canvas;
-  }
-
-  private createGraphicalContext () : CanvasRenderingContext2D {
-    const gc = this._canvas.getContext('2d');
-    if (gc === null) {
-      throw new Error();
-    }
-    gc.scale(2, 2);
-    return gc;
   }
 
   private createMapRenderer () : MapRenderer {
@@ -73,16 +55,6 @@ export class GameRenderer {
     });
   }
 
-  private createGlyphWriter () {
-    return new GlyphWriter({
-      graphicalContext: this._graphicalContext,
-      backgroundColor: Color.BLACK,
-      foregroundColor: Color.WHITE
-    });
-  }
-
-  private _canvas: HTMLCanvasElement;
-  private _graphicalContext: CanvasRenderingContext2D;
   private _game: Game;
   private _glyphWriter: GlyphWriter;
   private _mapRenderer: MapRenderer;

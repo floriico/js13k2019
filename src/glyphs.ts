@@ -96,14 +96,14 @@ export function writeGlyph(graphicalContext: CanvasRenderingContext2D, letter: s
 }
 
 export interface GlyphWriterOptions {
-  graphicalContext: CanvasRenderingContext2D;
   backgroundColor: Color;
   foregroundColor: Color;
 }
 
 export class GlyphWriter {
   constructor (options: GlyphWriterOptions) {
-    this._graphicalContext = options.graphicalContext;
+    this._canvas = this.createCanvas();
+    this._graphicalContext = this.createGraphicalContext();
     this._backgroundColor = options.backgroundColor;
     this._foregroundColor = options.foregroundColor;
   }
@@ -136,6 +136,24 @@ export class GlyphWriter {
     }
   }
 
+  private createCanvas () {
+    const canvas = document.createElement('canvas');
+    canvas.width = 800;
+    canvas.height = 600;
+    document.body.appendChild(canvas);
+    return canvas;
+  }
+
+  private createGraphicalContext () : CanvasRenderingContext2D {
+    const gc = this._canvas.getContext('2d');
+    if (gc === null) {
+      throw new Error();
+    }
+    gc.scale(2, 2);
+    return gc;
+  }
+
+  private _canvas: HTMLCanvasElement;
   private _graphicalContext: CanvasRenderingContext2D;
   private _backgroundColor: Color;
   private _foregroundColor: Color;
