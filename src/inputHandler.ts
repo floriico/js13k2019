@@ -1,4 +1,3 @@
-import { GameLoop } from './gameLoop';
 import { Input } from './input';
 
 export class InputHandler {
@@ -12,21 +11,21 @@ export class InputHandler {
 
   getNextInput (): Input {
     let input = this._inputs.shift();
-    return input || Input.NONE;
+    return input === undefined ? Input.NONE : input;
   }
 
   onKeyboardEvent (keyboardEvent: KeyboardEvent) {
     switch (keyboardEvent.key) {
-      case 'arrowUp':
+      case 'ArrowUp':
         this._inputs.push(Input.ARROW_UP);
         break;
-      case 'arrowDown':
+      case 'ArrowDown':
         this._inputs.push(Input.ARROW_DOWN);
         break;
-      case 'arrowLeft':
+      case 'ArrowLeft':
         this._inputs.push(Input.ARROW_LEFT);
         break;
-      case 'arrowRight':
+      case 'ArrowRight':
         this._inputs.push(Input.ARROW_RIGHT);
         break;
       case 'Enter':

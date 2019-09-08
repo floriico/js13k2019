@@ -4,6 +4,9 @@ import { Actor } from "./actor";
 import { MapFactory } from "./mapFactory";
 import { Console } from "./console";
 import { AdventureRenderer } from "./adventureRenderer";
+import { Input } from "./input";
+import { ActionWalk } from "./actionWalk";
+import { Direction } from "./direction";
 
 export interface AdventureStageOptions {
   renderer: AdventureRenderer
@@ -19,12 +22,30 @@ export class AdventureStage extends GameStage {
     this._renderer = options.renderer;
   }
 
-  handleInput(input: import("./input").Input): void {
-    
+  handleInput(input: Input): void {
+    switch (input) {
+      case Input.ARROW_UP:
+        this._hero.pushAction(new ActionWalk(Direction.NORTH));
+        break;
+      case Input.ARROW_DOWN:
+        this._hero.pushAction(new ActionWalk(Direction.SOUTH));
+        break;
+      case Input.ARROW_LEFT:
+        this._hero.pushAction(new ActionWalk(Direction.WEST));
+        break;
+      case Input.ARROW_RIGHT:
+        this._hero.pushAction(new ActionWalk(Direction.EAST));
+        break;
+    }
   }
   
   update(): void {
-    
+    if (this._hero.hasAction()) {
+      this._actors.forEach(function (actor) {
+        let action = actor.getNextAction();
+        action.perform(actor);
+      });
+    }
   }
   
   render(): void {
