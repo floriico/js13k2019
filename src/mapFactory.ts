@@ -33,6 +33,7 @@ class MidPointDisplacement {
       resolution = half;
     }
     this._map.normalize(0, 5);
+    this.createOcean();
     return this._map;
   }
 
@@ -55,6 +56,35 @@ class MidPointDisplacement {
       ) / 4;
     let depth  = Math.floor(this._random.next() * this._rougthness * resolution * 2 - resolution + average);
     this._map.setCell({ x: cx, y: cy }, depth);
+  }
+
+  createOcean () {
+    const width = this._map.getWidth();
+    const height = this._map.getHeight();
+    for (let y = 0; y < 5; y++) {
+      for (let x = 0; x < width; x++) {
+        let topPosition = { x: x, y: y };
+        let bottomPosition = { x: x, y: height - y - 1 };
+        let cellTop = this._map.getCell(topPosition);
+        let cellBottom = this._map.getCell(bottomPosition);
+        cellTop = Math.max(0, cellTop - 5 + y);
+        cellBottom = Math.max(0, cellBottom - 5 + y);
+        this._map.setCell(topPosition, cellTop);
+        this._map.setCell(bottomPosition, cellBottom);
+      }
+    }
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < 5; x++) {
+        let topPosition = { x: x, y: y };
+        let bottomPosition = { x: width - x - 1, y: y };
+        let cellTop = this._map.getCell(topPosition);
+        let cellBottom = this._map.getCell(bottomPosition);
+        cellTop = Math.max(0, cellTop - 5 + x);
+        cellBottom = Math.max(0, cellBottom - 5 + x);
+        this._map.setCell(topPosition, cellTop);
+        this._map.setCell(bottomPosition, cellBottom);
+      }
+    }
   }
 
   private _random: Random;

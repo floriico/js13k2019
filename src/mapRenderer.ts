@@ -65,16 +65,16 @@ export class MapRenderer {
         color = Color.YELLOW;
         break;
       case 3:
-        glyph = ',';
+        glyph = '.';
         color = Color.GREEN;
         break;
       case 4:
-        glyph = '"';
-        color = Color.DARK_GREEN;
+        glyph = ':';
+        color = Color.GREEN;
         break;
       case 5:
-        glyph = '.';
-        color = Color.DARK_GREY;
+        glyph = ':';
+        color = Color.DARK_GREEN;
         break;
       default:
         glyph = '.';
