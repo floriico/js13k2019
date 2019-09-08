@@ -20,7 +20,7 @@ export class AdventureRenderer {
 
   render (adventureStage: AdventureStage) {
     this._mapRenderer.render(adventureStage.getMap(), adventureStage.getHero());
-    this._actorRenderer.render(adventureStage.getActors());
+    this._actorRenderer.render(adventureStage.getActors(), adventureStage.getMap(), adventureStage.getHero());
     this._consoleRenderer.render(adventureStage.getConsole());
   }
 
@@ -36,8 +36,7 @@ export class AdventureRenderer {
     return new ActorRenderer({
       glyphWriter: this._glyphWriter,
       viewportWidth: 80,
-      viewportHeigth: 40,
-      position: { x: 0, y: 0}
+      viewportHeigth: 40
     });
   }
 

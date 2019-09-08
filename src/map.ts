@@ -27,6 +27,14 @@ export class Map {
     this._cells[position.x + position.y * this._width] = value;
   }
 
+  getWidth (): number {
+    return this._width;
+  }
+
+  getHeight (): number {
+    return this._height;
+  }
+
   getMin () {
     let min = Number.MAX_SAFE_INTEGER;
     this._cells.forEach(function (cell) {
