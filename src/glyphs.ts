@@ -79,22 +79,6 @@ export const Glyphs: Record<string, number> = {
   ')': 0x844480
 };
 
-export function writeGlyph(graphicalContext: CanvasRenderingContext2D, letter: string, posX: number, posY: number) {
-  let glyph = Glyphs[letter];
-  graphicalContext.fillStyle = '#fff';
-  graphicalContext.fillRect(posX, posY, 4, 6);
-  graphicalContext.fillStyle = '#000';
-  for (let i = 0; i < 24; i++) {
-    let x = i % 4;
-    let y = Math.floor(i / 4);
-    let bit = glyph & (1 << (23 - i));
-    console.log()
-    if (bit) {
-      graphicalContext.fillRect(x + posX, y + posY, 1, 1);
-    }
-  }
-}
-
 export interface GlyphWriterOptions {
   backgroundColor: Color;
   foregroundColor: Color;
@@ -108,11 +92,11 @@ export class GlyphWriter {
     this._foregroundColor = options.foregroundColor;
   }
 
-  writeGlyph (letter: string, posX: number, posY: number) {
+  writeGlyph (letter: string, posX: number, posY: number, color = this._foregroundColor) {
     let glyph = Glyphs[letter];
     this._graphicalContext.fillStyle = this._backgroundColor;
     this._graphicalContext.fillRect(posX, posY, 4, 6);
-    this._graphicalContext.fillStyle = this._foregroundColor;
+    this._graphicalContext.fillStyle = color;
     for (let i = 0; i < 24; i++) {
       let x = i % 4;
       let y = Math.floor(i / 4);

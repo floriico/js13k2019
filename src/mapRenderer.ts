@@ -2,11 +2,17 @@ import { Map } from './map';
 import { GlyphWriter } from './glyphs';
 import { Actor } from './actor';
 import { Position } from './position';
+import { Color } from './color';
 
 export interface MapRendererOptions {
   viewportWidth: number;
   viewportHeight: number;
   glyphWriter: GlyphWriter;
+}
+
+interface GlyphOptions {
+  glyph: string,
+  color: Color
 }
 
 export class MapRenderer {
@@ -24,8 +30,8 @@ export class MapRenderer {
           x: offset.x + x,
           y: offset.y + y
         });
-        let glyph = this.getGlyph(cell);
-        this._glyphWriter.writeGlyph(glyph, x * 4, y * 6);
+        let glyphOptions = this.getGlyphOptions(cell);
+        this._glyphWriter.writeGlyph(glyphOptions.glyph, x * 4, y * 6, glyphOptions.color);
       }
     }
   }
@@ -41,47 +47,44 @@ export class MapRenderer {
     return offset;
   }
 
-  private getGlyph (cell: number) {
+  private getGlyphOptions (cell: number) : GlyphOptions {
     let glyph;
+    let color;
+
     switch (cell) {
       case 0:
-        glyph = '0';
+        glyph = '\x01';
+        color = Color.DARK_BLUE;
         break;
       case 1:
-        glyph = '1';
+        glyph = '\x01';
+        color = Color.BLUE;
         break;
       case 2:
-        glyph = '2';
+        glyph = '.';
+        color = Color.YELLOW;
         break;
       case 3:
-        glyph = '3';
+        glyph = ',';
+        color = Color.GREEN;
         break;
       case 4:
-        glyph = '4';
+        glyph = '"';
+        color = Color.DARK_GREEN;
         break;
       case 5:
-        glyph = '5';
-        break;
-      case 6:
-        glyph = '6';
-        break;
-      case 7:
-        glyph = '7';
-        break;
-      case 8:
-        glyph = '8';
-        break;
-      case 9:
-        glyph = '9';
-        break;
-      case 10:
-        glyph = 'A';
+        glyph = '.';
+        color = Color.DARK_GREY;
         break;
       default:
         glyph = '.';
+        color = Color.GREY;
         break;
     }
-    return glyph;
+    return {
+      glyph: glyph,
+      color: color
+    };
   }
 
   private _viewportWidth: number;

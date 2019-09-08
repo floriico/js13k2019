@@ -1,5 +1,5 @@
 import { Console } from './console';
-import { writeGlyph, GlyphWriter } from './glyphs';
+import { GlyphWriter } from './glyphs';
 import { Position } from './position';
 
 export interface ConsoleRendererOptions {
