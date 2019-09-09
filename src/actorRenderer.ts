@@ -32,8 +32,9 @@ export class ActorRenderer {
         const displayX = actorPosition.x - position.x;
         const displayY = actorPosition.y - position.y;
         const glyph = actor.getGlyph();
+        const color = actor.getColor();
 
-        this._glyphWriter.writeGlyph(glyph, displayX * 4, displayY * 6) ;
+        this._glyphWriter.writeGlyph(glyph, displayX * 4, displayY * 6, color) ;
       }, this);
   }
 

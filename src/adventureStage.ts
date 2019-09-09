@@ -7,6 +7,7 @@ import { AdventureRenderer } from "./adventureRenderer";
 import { Input } from "./input";
 import { ActionWalk } from "./actionWalk";
 import { Direction } from "./direction";
+import { Color } from "./color";
 
 export interface AdventureStageOptions {
   renderer: AdventureRenderer
@@ -18,6 +19,7 @@ export class AdventureStage extends GameStage {
     this._map = this.createMap();
     this._hero = this.createHero();
     this._actors = [this._hero];
+    this.createEnemies();
     this._console = this.createConsole();
     this._renderer = options.renderer;
   }
@@ -85,6 +87,14 @@ export class AdventureStage extends GameStage {
 
   private createConsole () : Console {
     return new Console();
+  }
+
+  private createEnemies () {
+    this._actors.push(new Actor ({
+      position: {x: 10, y: 10},
+      glyph: 'r',
+      color: Color.GREY
+    }));
   }
 
   private _map: Map;

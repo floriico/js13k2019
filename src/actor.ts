@@ -2,10 +2,12 @@ import { Position } from './position';
 import { Direction } from './direction';
 import { Action } from './action';
 import { ActionDoNothing } from './actiondoNothing';
+import { Color } from './color';
 
 export interface ActorOptions {
   position: Position,
-  glyph: string
+  glyph: string,
+  color?: Color
 }
 
 export class Actor {
@@ -13,6 +15,7 @@ export class Actor {
     this._position = options.position;
     this._glyph = options.glyph;
     this._actions = [];
+    this._color = options.color || Color.WHITE;
   }
 
   getPosition (): Position {
@@ -30,6 +33,10 @@ export class Actor {
     return this._glyph;
   }
 
+  getColor (): Color {
+    return this._color;
+  }
+
   pushAction (action: Action) {
     this._actions.push(action);
   }
@@ -45,4 +52,5 @@ export class Actor {
   private _position: Position;
   private _glyph: string;
   private _actions: Action[];
+  private _color: Color;
 }

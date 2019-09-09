@@ -44,7 +44,6 @@ export class MapRenderer {
     offset.y = Math.max(offset.y - halfViewportHeight, 0);
     offset.x = Math.min(offset.x, map.getWidth() - this._viewportWidth);
     offset.y = Math.min(offset.y, map.getHeight() - this._viewportHeight);
-    console.log(offset);
     return offset;
   }
 

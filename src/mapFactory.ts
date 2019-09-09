@@ -32,7 +32,7 @@ class MidPointDisplacement {
       }
       resolution = half;
     }
-    this._map.normalize(0, 5);
+    this._map.normalize(1, 5);
     this.createOcean();
     return this._map;
   }
