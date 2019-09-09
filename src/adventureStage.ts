@@ -25,16 +25,16 @@ export class AdventureStage extends GameStage {
   handleInput(input: Input): void {
     switch (input) {
       case Input.ARROW_UP:
-        this._hero.pushAction(new ActionWalk(Direction.NORTH));
+        this._hero.pushAction(new ActionWalk(this, Direction.NORTH));
         break;
       case Input.ARROW_DOWN:
-        this._hero.pushAction(new ActionWalk(Direction.SOUTH));
+        this._hero.pushAction(new ActionWalk(this, Direction.SOUTH));
         break;
       case Input.ARROW_LEFT:
-        this._hero.pushAction(new ActionWalk(Direction.WEST));
+        this._hero.pushAction(new ActionWalk(this, Direction.WEST));
         break;
       case Input.ARROW_RIGHT:
-        this._hero.pushAction(new ActionWalk(Direction.EAST));
+        this._hero.pushAction(new ActionWalk(this, Direction.EAST));
         break;
     }
   }
