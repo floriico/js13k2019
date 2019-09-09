@@ -71,7 +71,7 @@ export class AdventureStage extends GameStage {
   private createMap() : Map {
     return MapFactory.createMap({
       seed: 4242,
-      detail: 9,
+      detail: 7,
       rougthness: 0.95
     });
   }
