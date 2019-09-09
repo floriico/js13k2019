@@ -39,7 +39,14 @@ export class ActionWalk extends Action {
   private validatePosition(position: Position): boolean {
     let map = this._stage.getMap();
     let cell = map.getCell(position);
-    return cell !== 0;
+    let canWalk = cell !== 0;
+    let actors = this._stage.getActors();
+    let canAttack = actors.some((actor) => {
+      let enemyPosition = actor.getPosition();
+      return enemyPosition.x === position.x &&
+        enemyPosition.y === position.y;
+    });
+    return canWalk && !canAttack;
   }
 
   private _direction: Direction;
