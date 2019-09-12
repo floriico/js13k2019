@@ -25,7 +25,7 @@ export class InfoRenderer {
     let attack = hero.getAttack();
     this._glyphWriter.writeText('ATK: ' + attack[0] + '-' + attack[1], (this._position.x + 1) * 4, 6);
     this._glyphWriter.writeText('DEF: ' + hero.getDefense(), (this._position.x + 1) * 4, 12);
-    this._glyphWriter.writeText('HP:  ' + hero.getHp() + '/' + hero.getHpMax(), (this._position.x + 1) * 4, 18);
+    this._glyphWriter.writeText('HP:  ' + hero.getHp() + '/' + hero.getHpMax() + '     ', (this._position.x + 1) * 4, 18);
   }
 
   private _viewportWidth: number;

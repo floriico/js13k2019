@@ -10,6 +10,7 @@ import { Direction } from "./direction";
 import { Color } from "./color";
 import { Position } from "./position";
 import { actionAttack } from "./actionAttack";
+import { ActionRest } from "./actionRest";
 
 export interface AdventureStageOptions {
   renderer: AdventureRenderer
@@ -39,6 +40,9 @@ export class AdventureStage extends GameStage {
         break;
       case Input.ARROW_RIGHT:
         this._hero.pushAction(new ActionWalk(this, Direction.EAST));
+        break;
+      case Input.SPACE:
+        this._hero.pushAction(new ActionRest(this));
         break;
     }
   }

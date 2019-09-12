@@ -20,7 +20,7 @@ export class actionAttack extends Action {
     let message = actor.getName() + ' hit ' + this._target.getName() + ' for ' + hit + ' damage';
     this._stage.getConsole().addMessage(message);
     if (this._target.isDead()) {
-      let message = this._target.getName() + ' is dead';
+      let message = this._target.getName() + ' is dead                 ';
       this._stage.getConsole().addMessage(message);
     }
     return new ActionResult({ isOk: true });
