@@ -3,6 +3,7 @@ import { Actor } from "./actor";
 import { Direction } from "./direction";
 import { AdventureStage } from "./adventureStage";
 import { Position } from "./position";
+import { actionAttack } from "./actionAttack";
 
 export class ActionWalk extends Action {
   
@@ -29,25 +30,38 @@ export class ActionWalk extends Action {
         position.x -= 1;
         break;
     }
-    let canWalk = this.validatePosition(position);
-    if (canWalk) {
+    let canWalk = this.canWalk(position);
+    let canAttack = this.canAttack(position);
+    let result;
+    if (canWalk && !(canAttack)) {
       actor.setPosition(position);
+      result = new ActionResult({ isOk: canWalk });
+    } else if (canAttack) {
+      result = new ActionResult({
+        isOk: false,
+        delegate: new actionAttack(this._stage, canAttack)
+      });
+    } else {
+      result = new ActionResult({ isOk: false });
     }
-    return new ActionResult({ isOk: canWalk });
+    return result;
   }
 
-  private validatePosition(position: Position): boolean {
+  private canWalk(position: Position): boolean {
     let map = this._stage.getMap();
     let cell = map.getCell(position);
     let canWalk = cell !== 0;
+    return canWalk;
+  }
+
+  private canAttack (position: Position) : Actor | undefined {
     let actors = this._stage.getActors();
-    let canAttack = actors.some((actor) => {
+    return actors.find((actor) => {
       let enemyPosition = actor.getPosition();
       return enemyPosition.x === position.x &&
         enemyPosition.y === position.y;
     });
-    return canWalk && !canAttack;
-  }
+  } 
 
   private _direction: Direction;
   private _stage: AdventureStage;

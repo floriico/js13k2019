@@ -1,9 +1,7 @@
-import { Game } from "./game";
 import { MapRenderer } from "./mapRenderer";
 import { ActorRenderer } from "./actorRenderer";
 import { ConsoleRenderer } from "./consoleRenderer";
 import { GlyphWriter } from "./glyphs";
-import { Color } from "./color";
 import { AdventureStage } from "./adventureStage";
 
 export interface AdventureRendererOptions {

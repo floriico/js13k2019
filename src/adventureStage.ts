@@ -8,6 +8,8 @@ import { Input } from "./input";
 import { ActionWalk } from "./actionWalk";
 import { Direction } from "./direction";
 import { Color } from "./color";
+import { ActionDoNothing } from "./actiondoNothing";
+import { ActionResult } from "./action";
 
 export interface AdventureStageOptions {
   renderer: AdventureRenderer
@@ -42,11 +44,22 @@ export class AdventureStage extends GameStage {
   }
   
   update(): void {
+    if (this._hero.isDead()) {
+      // game over
+    }
     if (this._hero.hasAction()) {
       this._actors.forEach(function (actor) {
-        let action = actor.getNextAction();
-        action.perform(actor);
+        let result;
+        do {
+          let action = actor.getNextAction()
+          result = action.perform(actor);
+          let delegate = result.getDelegate();
+          if (!(result.isOk()) && delegate) {
+            actor.pushAction(delegate);
+          }
+        } while (!(result.isOk()));
       });
+      this._actors = this._actors.filter((actor) => !(actor.isDead()));
     }
   }
   
@@ -64,7 +77,7 @@ export class AdventureStage extends GameStage {
 
   getActors () {
     return this._actors;
-  } 
+  }
 
   getConsole () {
     return this._console;
@@ -81,7 +94,12 @@ export class AdventureStage extends GameStage {
   private createHero() : Actor {
     return new Actor ({
       position: { x: 40, y: 20 },
-      glyph: '@'
+      glyph: '@',
+      name: 'you',
+      maxHp: 10,
+      hp: 10,
+      attack: [1,2],
+      defense: 0,
     });
   }
 
@@ -91,9 +109,24 @@ export class AdventureStage extends GameStage {
 
   private createEnemies () {
     this._actors.push(new Actor ({
-      position: {x: 10, y: 10},
+      position: { x: 10, y: 10 },
       glyph: 'r',
-      color: Color.GREY
+      name: 'rat',
+      color: Color.GREY,
+      maxHp: 4,
+      hp: 4,
+      attack: [1,2],
+      defense: 0
+    }));
+    this._actors.push(new Actor ({
+      position: { x: 20, y: 20 },
+      glyph: 'r',
+      name: 'rat',
+      color: Color.GREY,
+      maxHp: 4,
+      hp: 4,
+      attack: [1,2],
+      defense: 0
     }));
   }
 
