@@ -27,6 +27,8 @@ export class Actor {
     this._attack = options.attack;
     this._defense = options.defense;
     this._isDead = false;
+    this._level = 1;
+    this._xp = 0;
   }
 
   getPosition (): Position {
@@ -92,6 +94,35 @@ export class Actor {
     return this._isDead;
   }
 
+  getXp():  number {
+    return this._xp;
+  }
+
+  getNextLevelXp(): number {
+    return this._level * 10;
+  }
+
+  getLevel(): number {
+    return this._level;
+  }
+
+  addXp (xp: number) {
+    this._xp += xp;
+    let nextLevelXp = this.getNextLevelXp()
+    if (this._xp >= nextLevelXp) {
+      this._xp -= nextLevelXp;
+      this.levelUp();
+    }
+  }
+
+  levelUp () {
+    this._level = Math.min(5, this._level + 1);
+    this._maxHp += 5;
+    this._attack[0] += this._level % 2 ;
+    this._attack[1] += 1;
+    this._defense += 1 - (this._level % 2);
+  }
+
   private _position: Position;
   private _glyph: string;
   private _actions: Action[];
@@ -102,4 +133,6 @@ export class Actor {
   private _attack: [number, number];
   private _defense: number;
   private _isDead: boolean;
+  private _level: number;
+  private _xp: number;
 }

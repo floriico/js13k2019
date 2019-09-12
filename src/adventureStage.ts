@@ -124,7 +124,7 @@ export class AdventureStage extends GameStage {
     return new Actor ({
       position: { x: 120, y: 120 },
       glyph: '@',
-      name: 'you',
+      name: 'hero',
       maxHp: 10,
       hp: 10,
       attack: [1,2],

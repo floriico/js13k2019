@@ -19,7 +19,9 @@ export class actionAttack extends Action {
     this._target.setHp(hp);
     let message = actor.getName() + ' hit ' + this._target.getName() + ' for ' + hit + ' damage';
     this._stage.getConsole().addMessage(message);
+    actor.addXp(1);
     if (this._target.isDead()) {
+      actor.addXp(2);
       let message = this._target.getName() + ' is dead                 ';
       this._stage.getConsole().addMessage(message);
     }
