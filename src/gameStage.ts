@@ -4,7 +4,8 @@ import { GameLoop, GameLoopEvent } from "./gameLoop";
 export enum GameStageType {
   MAIN_MENU,
   ADVENTURE,
-  GAME_OVER
+  GAME_OVER,
+  GAME_WON
 }
 
 export abstract class GameStage {

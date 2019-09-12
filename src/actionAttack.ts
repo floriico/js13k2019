@@ -1,6 +1,7 @@
 import { Action, ActionResult } from "./action";
 import { AdventureStage } from "./adventureStage";
 import { Actor } from "./actor";
+import { GameLoopEvent } from "./gameLoop";
 
 export class actionAttack extends Action {
   constructor (stage: AdventureStage, target: Actor) {
@@ -24,6 +25,9 @@ export class actionAttack extends Action {
       actor.addXp(2);
       let message = this._target.getName() + ' is dead                 ';
       this._stage.getConsole().addMessage(message);
+      if (this._target.getGlyph() === 'D') {
+        this._stage.notifyGameLoop(GameLoopEvent.GAME_WON);
+      }
     }
     return new ActionResult({ isOk: true });
   }

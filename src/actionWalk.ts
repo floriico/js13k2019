@@ -36,13 +36,13 @@ export class ActionWalk extends Action {
     if (canWalk && !(canAttack)) {
       actor.setPosition(position);
       result = new ActionResult({ isOk: canWalk });
-    } else if (canAttack) {
+    } else if (actor.getGlyph() === '@' && canAttack) {
       result = new ActionResult({
         isOk: false,
         delegate: new actionAttack(this._stage, canAttack)
       });
     } else {
-      result = new ActionResult({ isOk: false });
+      result = new ActionResult({ isOk: true });
     }
     return result;
   }

@@ -1,10 +1,10 @@
+import { GameWonRenderer } from "./gameWonRenderer";
 import { GameStage } from "./GameStage";
-import { GameOverRenderer } from "./gameOverRenderer";
 import { Input } from "./input";
 
-export class GameOverStage extends GameStage {
-  constructor (renderer: GameOverRenderer) {
-    super ();
+export class GameWonStage extends GameStage {
+  constructor (renderer: GameWonRenderer) {
+    super();
     this._renderer = renderer;
   }
 
@@ -20,5 +20,7 @@ export class GameOverStage extends GameStage {
     this._renderer.render();
   }
 
-  private _renderer: GameOverRenderer;
+  
+
+  private _renderer: GameWonRenderer;
 }

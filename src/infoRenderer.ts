@@ -22,13 +22,14 @@ export class InfoRenderer {
       this._glyphWriter.writeGlyph('|', this._position.x * 4, y * 6);
     }
     this._glyphWriter.writeText('hero', (this._position.x + 1) * 4, 0);
-    this._glyphWriter.writeText('LVL: ' + hero.getLevel() + '     ', (this._position.x + 1) * 4, 6);
-    this._glyphWriter.writeText('XP:  ' + hero.getXp() + '/' + hero.getNextLevelXp() + '   ' , (this._position.x + 1) * 4, 12);
+
+    this._glyphWriter.writeText('LVL: ' + hero.getLevel() + '     ', (this._position.x + 1) * 4, 2 * 6);
+    this._glyphWriter.writeText('XP:  ' + hero.getXp() + '/' + hero.getNextLevelXp() + '   ' , (this._position.x + 1) * 4, 3 * 6);
 
     let attack = hero.getAttack();
-    this._glyphWriter.writeText('ATK: ' + attack[0] + '-' + attack[1], (this._position.x + 1) * 4, 18);
-    this._glyphWriter.writeText('DEF: ' + hero.getDefense(), (this._position.x + 1) * 4, 24);
-    this._glyphWriter.writeText('HP:  ' + hero.getHp() + '/' + hero.getHpMax() + '     ', (this._position.x + 1) * 4, 30);
+    this._glyphWriter.writeText('ATK: ' + attack[0] + '-' + attack[1], (this._position.x + 1) * 4, 5 * 6);
+    this._glyphWriter.writeText('DEF: ' + hero.getDefense(), (this._position.x + 1) * 4, 6 * 6);
+    this._glyphWriter.writeText('HP:  ' + hero.getHp() + '/' + hero.getHpMax() + '     ', (this._position.x + 1) * 4, 7 * 6);
   }
 
   private _viewportWidth: number;

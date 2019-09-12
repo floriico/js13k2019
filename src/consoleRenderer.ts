@@ -25,6 +25,7 @@ export class ConsoleRenderer {
     }
     console.getMessages(5)
       .forEach((message, index) => {
+        message += '                    ';
         this._glyphWriter.writeText(message, this._position.x, (this._position.y + index + 1) * 6 )
       }, this);
   }
