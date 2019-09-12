@@ -66,6 +66,14 @@ export class Map {
     });
   }
 
+  fillBox(left: number, top: number, right:number, bottom: number, cell: number) {
+    for (let y = top; y <= bottom; y++) {
+      for (let x = left; x <= right; x++) {
+        this._cells[y * this._width + x] = cell;
+      }
+    }
+  }
+
   private _width: number;
   private _height: number;
   private _size: number;

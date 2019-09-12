@@ -93,7 +93,7 @@ export class AdventureStage extends GameStage {
 
   private createHero() : Actor {
     return new Actor ({
-      position: { x: 40, y: 20 },
+      position: { x: 64, y: 64 },
       glyph: '@',
       name: 'you',
       maxHp: 10,
@@ -127,6 +127,16 @@ export class AdventureStage extends GameStage {
       hp: 4,
       attack: [1,2],
       defense: 0
+    }));
+    this._actors.push(new Actor({
+      position: { x: 66, y: 59 },
+      glyph: 'D',
+      name: 'dragon',
+      color: Color.RED,
+      maxHp: 30,
+      hp: 30,
+      attack: [6, 8],
+      defense: 4
     }));
   }
 

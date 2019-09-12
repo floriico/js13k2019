@@ -80,6 +80,10 @@ export class MapRenderer {
         glyph = '.';
         color = Color.GREY;
         break;
+      case 10:
+        glyph = 'x';
+        color = Color.GREY;
+        break; 
       default:
         glyph = '.';
         color = Color.GREY;

@@ -34,6 +34,7 @@ class MidPointDisplacement {
     }
     this._map.normalize(2, 7);
     this.createOcean();
+    this.createCastle();
     return this._map;
   }
 
@@ -85,6 +86,23 @@ class MidPointDisplacement {
         this._map.setCell(bottomPosition, cellBottom);
       }
     }
+  }
+
+  private createCastle () {
+    this._map.fillBox(49, 49, 54, 54, 10);
+    this._map.fillBox(65, 50, 68, 53, 10);
+    this._map.fillBox(79, 49, 84, 54, 10);
+    this._map.fillBox(53, 51, 80, 52, 10);
+    this._map.fillBox(51, 54, 52, 65, 10);
+    this._map.fillBox(49, 65, 54, 70, 10);
+    this._map.fillBox(81, 54, 82, 65, 10);
+    this._map.fillBox(79, 65, 84, 70, 10);
+
+    this._map.fillBox(54, 67, 60, 68, 10);
+    this._map.fillBox(60, 66, 63, 69, 10);
+
+    this._map.fillBox(73, 67, 79, 68, 10);
+    this._map.fillBox(70, 66, 73, 69, 10);
   }
 
   private _random: Random;

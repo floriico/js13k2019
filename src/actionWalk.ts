@@ -50,7 +50,7 @@ export class ActionWalk extends Action {
   private canWalk(position: Position): boolean {
     let map = this._stage.getMap();
     let cell = map.getCell(position);
-    let canWalk = cell !== 0;
+    let canWalk = cell !== 0 && cell !== 10;
     return canWalk;
   }
 
