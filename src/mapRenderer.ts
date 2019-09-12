@@ -43,7 +43,7 @@ export class MapRenderer {
     offset.x = Math.max(offset.x - halfViewportWidth, 0);
     offset.y = Math.max(offset.y - halfViewportHeight, 0);
     offset.x = Math.min(offset.x, map.getWidth() - this._viewportWidth);
-    offset.y = Math.min(offset.y, map.getHeight() - this._viewportHeight);
+    offset.y = Math.min(offset.y, map.getHeight() - this._viewportHeight);  
     return offset;
   }
 
@@ -69,12 +69,16 @@ export class MapRenderer {
         color = Color.GREEN;
         break;
       case 4:
-        glyph = ':';
+        glyph = '.';
         color = Color.GREEN;
         break;
       case 5:
-        glyph = ':';
+        glyph = '.';
         color = Color.DARK_GREEN;
+        break;
+      case 6:
+        glyph = '.';
+        color = Color.GREY;
         break;
       default:
         glyph = '.';
