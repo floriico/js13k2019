@@ -20,7 +20,8 @@ export class ConsoleRenderer {
 
   render (console: Console) {
     for (let i = 0; i < this._viewportWidth; i++) {
-      this._glyphWriter.writeGlyph('-', (i + this._position.x) * 4, this._position.y * 6);
+      let glyph = i === 80 ? '+' : '-';
+      this._glyphWriter.writeGlyph(glyph, (i + this._position.x) * 4, this._position.y * 6);
     }
     console.getMessages(5)
       .forEach((message, index) => {

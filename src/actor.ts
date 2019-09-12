@@ -76,6 +76,10 @@ export class Actor {
     }
   }
 
+  getHpMax (): number {
+    return this._maxHp;
+  }
+
   getAttack (): [number, number] {
     return this._attack;
   }
