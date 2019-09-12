@@ -8,8 +8,8 @@ import { Input } from "./input";
 import { ActionWalk } from "./actionWalk";
 import { Direction } from "./direction";
 import { Color } from "./color";
-import { ActionDoNothing } from "./actiondoNothing";
-import { ActionResult } from "./action";
+import { Position } from "./position";
+import { actionAttack } from "./actionAttack";
 
 export interface AdventureStageOptions {
   renderer: AdventureRenderer
@@ -48,7 +48,8 @@ export class AdventureStage extends GameStage {
       // game over
     }
     if (this._hero.hasAction()) {
-      this._actors.forEach(function (actor) {
+      this.ia();
+      this._actors.forEach((actor) => {
         let result;
         do {
           let action = actor.getNextAction()
@@ -61,6 +62,29 @@ export class AdventureStage extends GameStage {
       });
       this._actors = this._actors.filter((actor) => !(actor.isDead()));
     }
+  }
+
+  private ia(): void {
+    this._actors.forEach((actor) => {
+      if (!(actor.hasAction())) {
+        let position = actor.getPosition();
+        let heroPosition = this._hero.getPosition();
+        let dist = Math.abs(position.x - heroPosition.x) + Math.abs(position.y - heroPosition.y);
+        if (dist === 1) {
+          actor.pushAction(new actionAttack(this, this._hero))
+        } else {
+          let d4 = Math.floor(Math.random() * 4);
+          let direction: Direction;
+          switch (d4) {
+            case 0: direction = Direction.NORTH; break;
+            case 1: direction = Direction.SOUTH; break;
+            case 2: direction = Direction.WEST; break;
+            default: direction = Direction.EAST; break;
+          }
+          actor.pushAction(new ActionWalk(this, direction));
+        }
+      }
+    });
   }
   
   render(): void {
@@ -93,7 +117,7 @@ export class AdventureStage extends GameStage {
 
   private createHero() : Actor {
     return new Actor ({
-      position: { x: 64, y: 64 },
+      position: { x: 120, y: 120 },
       glyph: '@',
       name: 'you',
       maxHp: 10,
@@ -108,26 +132,13 @@ export class AdventureStage extends GameStage {
   }
 
   private createEnemies () {
-    this._actors.push(new Actor ({
-      position: { x: 10, y: 10 },
-      glyph: 'r',
-      name: 'rat',
-      color: Color.GREY,
-      maxHp: 4,
-      hp: 4,
-      attack: [1,2],
-      defense: 0
-    }));
-    this._actors.push(new Actor ({
-      position: { x: 20, y: 20 },
-      glyph: 'r',
-      name: 'rat',
-      color: Color.GREY,
-      maxHp: 4,
-      hp: 4,
-      attack: [1,2],
-      defense: 0
-    }));
+    for (let r = 0; r < 20; r ++) {
+      let position = {
+        x: Math.round(Math.random() * 108 + 10),
+        y: Math.round(Math.random() * 30) + 90
+      }
+      this._actors.push(this.createRat(position));
+    }
     this._actors.push(new Actor({
       position: { x: 66, y: 59 },
       glyph: 'D',
@@ -138,6 +149,19 @@ export class AdventureStage extends GameStage {
       attack: [6, 8],
       defense: 4
     }));
+  }
+
+  private createRat (position: Position) {
+    return new Actor ({
+      position: position,
+      glyph: 'r',
+      name: 'rat',
+      color: Color.GREY,
+      maxHp: 4,
+      hp: 4,
+      attack: [1,2],
+      defense: 0
+    })
   }
 
   private _map: Map;
