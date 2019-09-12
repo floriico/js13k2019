@@ -6,6 +6,8 @@ import { MainMenuRenderer } from './mainMenuRenderer';
 import { GameStageType } from './GameStage';
 import { AdventureStage } from './adventureStage';
 import { AdventureRenderer } from './adventureRenderer';
+import { GameOverStage } from './gameOverStage';
+import { GameOverRenderer } from './gameOverRenderer';
 
 const glyphWriter = new GlyphWriter({
   backgroundColor: Color.BLACK,
@@ -24,7 +26,9 @@ const adventureStage = new AdventureStage({
     glyphWriter: glyphWriter
   })
 });
+const gameOverStage = new GameOverStage(new GameOverRenderer(glyphWriter));
 const gameLoop = new GameLoop();
 gameLoop.registerStage(GameStageType.MAIN_MENU, mainMenuStage);
 gameLoop.registerStage(GameStageType.ADVENTURE, adventureStage);
+gameLoop.registerStage(GameStageType.GAME_OVER, gameOverStage);
 gameLoop.start();

@@ -3,7 +3,8 @@ import { GameLoop, GameLoopEvent } from "./gameLoop";
 
 export enum GameStageType {
   MAIN_MENU,
-  ADVENTURE
+  ADVENTURE,
+  GAME_OVER
 }
 
 export abstract class GameStage {

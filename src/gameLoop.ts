@@ -3,7 +3,8 @@ import { Input } from "./input";
 import { InputHandler } from "./inputHandler";
 
 export enum GameLoopEvent {
-  START_ADVENTURE
+  START_ADVENTURE,
+  GAME_OVER
 }
 
 export class GameLoop {
@@ -11,6 +12,7 @@ export class GameLoop {
     this._currentStage = EmptyGameStage.getInstance();
     this._mainMenuStage = EmptyGameStage.getInstance();
     this._adventureStage = EmptyGameStage.getInstance();
+    this._gameOverStage = EmptyGameStage.getInstance();
     this._inputHandler = new InputHandler();
     this._inputHandler.listen();
     this._isRunning = false;
@@ -37,6 +39,9 @@ export class GameLoop {
       case GameStageType.ADVENTURE:
         this._adventureStage = stage;
         break;
+      case GameStageType.GAME_OVER:
+        this._gameOverStage = stage;
+        break;
     }
   }
 
@@ -56,12 +61,17 @@ export class GameLoop {
         this._currentStage = this._adventureStage;
         this.start();
         break;
+      case GameLoopEvent.GAME_OVER:
+        this.stop();
+        this._currentStage = this._gameOverStage;
+        this.start();
     }
   }
 
   private _currentStage: GameStage;
   private _mainMenuStage: GameStage;
   private _adventureStage: GameStage;
+  private _gameOverStage: GameStage;
   private _isRunning: boolean;
   private _intervalId: number;
   private _inputHandler: InputHandler;

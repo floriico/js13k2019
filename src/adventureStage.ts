@@ -11,6 +11,7 @@ import { Color } from "./color";
 import { Position } from "./position";
 import { actionAttack } from "./actionAttack";
 import { ActionRest } from "./actionRest";
+import { GameLoopEvent } from "./gameLoop";
 
 export interface AdventureStageOptions {
   renderer: AdventureRenderer
@@ -49,7 +50,7 @@ export class AdventureStage extends GameStage {
   
   update(): void {
     if (this._hero.isDead()) {
-      // game over
+      this.notifyGameLoop(GameLoopEvent.GAME_OVER);
     }
     if (this._hero.hasAction()) {
       this.ia();
